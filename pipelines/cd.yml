@@ -14,6 +14,7 @@ resources:
     resourceGroup: anraghun
     registry: devopsClinic
     repository: devopsclinicdemo
+    trigger: true
 
 stages:
 
