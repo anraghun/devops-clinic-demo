@@ -7,6 +7,7 @@ trigger:
 - master
 
 stages:
+
 - stage: Build_And_Test
   displayName: 'Build And Test'
   pool:
@@ -24,5 +25,12 @@ stages:
         command: 'install'
     - script: |
         npm run build
-        npm test
+      displayName: 'Build'
 
+  - job: Test
+    dependsOn: Build
+    displayName: 'Run Tests'
+    steps:
+    - script: |
+        npm test        
+      displayName: 'Test'
