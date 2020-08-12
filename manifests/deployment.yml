@@ -1,9 +1,15 @@
-apiVersion : apps/v1beta1
+apiVersion : apps/v1
 kind: Deployment
 metadata:
   name: "hello-world"
+  namespace: devops-clinic
+  labels: 
+    app: hello-world
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: hello-world
   template:
     metadata:
       labels:
