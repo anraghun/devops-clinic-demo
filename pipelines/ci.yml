@@ -23,9 +23,7 @@ stages:
     - task: Npm@1
       inputs:
         command: 'install'
-    - script: |
-        npm run build
-      displayName: 'Build'
+      displayName: 'Npm Install'
 
   - job: Test
     dependsOn: Build
