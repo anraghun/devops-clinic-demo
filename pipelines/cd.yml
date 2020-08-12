@@ -1,3 +1,5 @@
+trigger: none
+
 variables:
     dockerRegistryServiceConnection: 'Devops-Clinic-CR-Connection'
     imageRepository: 'devopsclinicdemo'
