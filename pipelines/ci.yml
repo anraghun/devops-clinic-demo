@@ -6,6 +6,13 @@
 trigger:
 - master
 
+variables:
+    dockerRegistryServiceConnection: 'Devops-Clinic-CR-Connection'
+    imageRepository: 'anraghundevopsclinicdemo'
+    containerRegistry: 'devopsclinic.azurecr.io'
+    dockerfilePath: '$(Build.SourcesDirectory)/dockerfile'
+    tag: '$(Build.BuildId)'
+
 stages:
 
 - stage: Build_And_Test
@@ -38,13 +45,6 @@ stages:
   dependsOn: Build_And_Test
   pool:
     vmImage: 'ubuntu-latest'
-
-  variables:
-    dockerRegistryServiceConnection: 'Devops-Clinic-CR-Connection'
-    imageRepository: 'anraghundevopsclinicdemo'
-    containerRegistry: 'devopsclinic.azurecr.io'
-    dockerfilePath: '$(Build.SourcesDirectory)/dockerfile'
-    tag: '$(Build.BuildId)'
 
   jobs:
 
