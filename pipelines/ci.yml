@@ -12,23 +12,53 @@ stages:
   displayName: 'Build And Test'
   pool:
     vmImage: 'ubuntu-latest'
+
   jobs:
+
   - job: Build
-    displayName: 'Install Dependencies and Build'
+    displayName: 'Install Dependencies and Test'
     steps:
+
     - task: NodeTool@0
       inputs:
         versionSpec: '12.x'
       displayName: 'Install Node.js'
+
     - task: Npm@1
       inputs:
         command: 'install'
       displayName: 'Npm Install'
 
-  - job: Test
-    dependsOn: Build
-    displayName: 'Run Tests'
-    steps:
     - script: |
         npm test        
       displayName: 'Test'
+
+- stage: Containerise_And_Push
+  displayName: 'Containerise and Push Image'
+  dependsOn: Build_And_Test
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  variables:
+    dockerRegistryServiceConnection: 'Devops-Clinic-CR-Connection'
+    imageRepository: 'anraghundevopsclinicdemo'
+    containerRegistry: 'devopsclinic.azurecr.io'
+    dockerfilePath: '$(Build.SourcesDirectory)/dockerfile'
+    tag: '$(Build.BuildId)'
+
+  jobs:
+
+  - job: Build_And_Push
+    displayName: 'Build Container Image and Push to Registry'
+    steps:
+
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+    
