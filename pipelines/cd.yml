@@ -52,5 +52,3 @@ stages:
                 $(System.DefaultWorkingDirectory)/manifests/service.yml
               imagePullSecrets: |
                 $(imagePullSecret)
-              containers: |
-                $(containerRegistry)/$(imageRepository)
