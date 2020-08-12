@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: "hello-world"
-          image: "devopsclinic.azurecr.io/devopsclinicdemo"
+          image: "nginx"
           ports:
           - containerPort: 8080
