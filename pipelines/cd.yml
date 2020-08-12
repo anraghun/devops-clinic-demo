@@ -9,8 +9,11 @@ variables:
 resources:
   containers:
   - container: devopsclinincdemo
-    image: devopsclinicdemo
-    connection: Devops-Clinic-K8s-Connection
+    type: ACR
+    azureSubscription: Azure-Resource-Manager-Connection
+    resourceGroup: anraghun
+    registry: devopsClinic
+    repository: devopsclinicdemo
 
 stages:
 
