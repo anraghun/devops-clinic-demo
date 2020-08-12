@@ -7,7 +7,7 @@ trigger:
 - master
 
 stages:
-- stage: Build-And-Test
+- stage: Build_And_Test
   displayName: 'Build And Test'
   pool:
     vmImage: 'ubuntu-latest'
