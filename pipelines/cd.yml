@@ -4,12 +4,9 @@ variables:
     containerRegistry: 'devopsclinic.azurecr.io'
     imagePullSecret: clinicimage
 
-resource:
+resources:
   containers:
   - container: devopsclinincdemo
-    type: ACR
-    subscription: RMPM
-    registry: devopsClinic
     image: devopsclinicdemo
     connection: Devops-Clinic-K8s-Connection
 
@@ -24,7 +21,7 @@ stages:
 
   - deployment: DeployToAks
     displayName: 'Deploy to Azure Kubernetes Service'
-    environmen: 'Devops-Clinic-Environment.devops-clinic'
+    environment: 'Devops-Clinic-Environment.devops-clinic'
     strategy:
       runOnce:
         deploy:
