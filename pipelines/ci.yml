@@ -8,7 +8,7 @@ trigger:
 
 variables:
     dockerRegistryServiceConnection: 'Devops-Clinic-CR-Connection'
-    imageRepository: 'anraghundevopsclinicdemo'
+    imageRepository: 'devopsclinicdemo'
     containerRegistry: 'devopsclinic.azurecr.io'
     dockerfilePath: '$(Build.SourcesDirectory)/dockerfile'
     tag: '$(Build.BuildId)'
