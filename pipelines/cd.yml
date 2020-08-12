@@ -1,0 +1,52 @@
+variables:
+    dockerRegistryServiceConnection: 'Devops-Clinic-CR-Connection'
+    imageRepository: 'devopsclinicdemo'
+    containerRegistry: 'devopsclinic.azurecr.io'
+    imagePullSecret: clinicimage
+
+resource:
+  containers:
+  - container: devopsclinincdemo
+    type: ACR
+    subscription: RMPM
+    registry: devopsClinic
+    image: devopsclinicdemo
+    connection: Devops-Clinic-K8s-Connection
+
+stages:
+
+- stage: Deploy
+  displayName: 'Deploy to Production'
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  jobs:
+
+  - deployment: DeployToAks
+    displayName: 'Deploy to Azure Kubernetes Service'
+    environmen: 'Devops-Clinic-Environment.devops-clinic'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+
+          - task: KubernetesManifest@0
+            displayName: Create imagePullSecret
+            inputs:
+              action: createSecret
+              namespace: "devops-clinic"
+              secretName: $(imagePullSecret)              
+              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+
+          - task: KubernetesManifest@0
+            displayName: Deploy to Kubernetes cluster
+            inputs:
+              action: deploy
+              namespace: "devops-clinic"
+              manifests: |
+                manifests/deployment.yml
+                manifests/service.yml
+              imagePullSecrets: |
+                $(imagePullSecret)
+              containers: |
+                $(containerRegistry)/$(imageRepository):latest
