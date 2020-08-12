@@ -60,5 +60,5 @@ stages:
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
-          latest
+          $(Build.SourceVersion)
     
