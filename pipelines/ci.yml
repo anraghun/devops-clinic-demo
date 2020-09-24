@@ -59,6 +59,7 @@ stages:
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
+        addPipelineData: false
         tags: |
           $(Build.SourceVersion)
     
