@@ -1,0 +1,28 @@
+trigger:
+- master
+
+stages:
+
+- stage: Deploy
+  displayName: 'Deploy Review App'
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  jobs:
+
+  - deployment: DeployPullRequest
+    displayName: Deploy Pull request
+    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
+    environment: 'Devops-Clinic-Environment.review-sandbox-2'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - reviewApp: devops-clinic
+          
+          - task: Kubernetes@1
+            displayName: 'Create a new namespace for the pull request'
+            inputs:
+              command: apply
+              useConfigurationFile: true
+              inline: '{ "kind": "Namespace", "apiVersion": "v1", "metadata": { "name": "review-sandbox-2", "labels": { "azds.io/space": "true", "azds.io/parent-space": "devops-clinic" }}}'
