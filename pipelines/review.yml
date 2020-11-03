@@ -1,5 +1,4 @@
-trigger:
-- master
+trigger: none
 
 stages:
 
@@ -12,7 +11,7 @@ stages:
 
   - deployment: DeployPullRequest
     displayName: Deploy Pull request
-    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
+    # condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
     environment: 'Devops-Clinic-Environment.review-sandbox-2'
     strategy:
       runOnce:
